@@ -1,12 +1,12 @@
 [
   {
-    "title": "hello",
-    "text": "hello",
-    "id": "1710354496180"
-  },
-  {
     "title": "Place Walmart Order",
     "text": "we need groceries and other stuff",
     "id": "1710354559011"
+  },
+  {
+    "title": "Test Note",
+    "text": "This is a test",
+    "id": "1710429273728"
   }
 ]

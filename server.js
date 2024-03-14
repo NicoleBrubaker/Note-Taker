@@ -29,7 +29,7 @@ app.get("/api/notes", (req, res) => {
   });
 });
 
-// Write updated notes back to json file
+// Write update notes
 app.post("/api/notes", (req, res) => {
   fs.readFile(dbPath, "utf8", (err, data) => {
     if (err) {
@@ -51,6 +51,27 @@ app.post("/api/notes", (req, res) => {
 });
 
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "/public/index.html")));
+
+// Delete note 
+app.delete("/api/notes/:id", (req, res) => {
+  const noteId = req.params.id;
+  fs.readFile(dbPath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error reading notes data.");
+    }
+    let notes = JSON.parse(data);
+    notes = notes.filter((note) => note.id !== noteId);
+    fs.writeFile(dbPath, JSON.stringify(notes, null, 2), (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Error saving the note.");
+      }
+      res.status(204).send();
+    });
+  });
+});
+
 
 // Listen on port 3001
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`));
